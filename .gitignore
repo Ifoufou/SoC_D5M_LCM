@@ -32,6 +32,7 @@
 
 # Debug files
 *.dSYM/
+*.txt
 
 # ---> C++
 # Compiled Object files
@@ -79,8 +80,7 @@
 *.bak
 **/mem_init/*
 *.objdump
-**/Lab3_sys/*
-
+**/soc_d5m_niosii_sys/*
 
 # image and video files
 *.png
