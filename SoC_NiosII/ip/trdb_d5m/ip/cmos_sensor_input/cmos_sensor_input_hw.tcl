@@ -78,6 +78,7 @@ add_fileset_file cmos_sensor_input_synchronizer.vhd VHDL PATH hdl/cmos_sensor_in
 add_fileset_file cmos_sensor_input_sampler.vhd VHDL PATH hdl/cmos_sensor_input_sampler.vhd
 add_fileset_file cmos_sensor_input_sc_fifo.vhd VHDL PATH hdl/cmos_sensor_input_sc_fifo.vhd
 add_fileset_file cmos_sensor_input_debayer.vhd VHDL PATH hdl/cmos_sensor_input_debayer.vhd
+add_fileset_file line_buffer.vhd VHDL PATH hdl/line_buffer.vhd
 add_fileset_file cmos_sensor_input_packer.vhd VHDL PATH hdl/cmos_sensor_input_packer.vhd
 add_fileset_file cmos_sensor_input_avalon_st_source.vhd VHDL PATH hdl/cmos_sensor_input_avalon_st_source.vhd
 add_fileset_file cmos_sensor_input.vhd VHDL PATH hdl/cmos_sensor_input.vhd TOP_LEVEL_FILE
@@ -92,6 +93,7 @@ add_fileset_file cmos_sensor_input_synchronizer.vhd VHDL PATH hdl/cmos_sensor_in
 add_fileset_file cmos_sensor_input_sampler.vhd VHDL PATH hdl/cmos_sensor_input_sampler.vhd
 add_fileset_file cmos_sensor_input_sc_fifo.vhd VHDL PATH hdl/cmos_sensor_input_sc_fifo.vhd
 add_fileset_file cmos_sensor_input_debayer.vhd VHDL PATH hdl/cmos_sensor_input_debayer.vhd
+add_fileset_file line_buffer.vhd VHDL PATH hdl/line_buffer.vhd
 add_fileset_file cmos_sensor_input_packer.vhd VHDL PATH hdl/cmos_sensor_input_packer.vhd
 add_fileset_file cmos_sensor_input_avalon_st_source.vhd VHDL PATH hdl/cmos_sensor_input_avalon_st_source.vhd
 add_fileset_file cmos_sensor_input.vhd VHDL PATH hdl/cmos_sensor_input.vhd

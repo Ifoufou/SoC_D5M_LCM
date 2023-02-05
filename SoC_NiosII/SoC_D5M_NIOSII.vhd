@@ -153,7 +153,7 @@ architecture rtl of SoC_D5M_NIOSII is
             trdb_d5m_xclkin_clk              : out   std_logic;
             trdb_d5m_cmos_sensor_frame_valid : in    std_logic                     := 'X';
             trdb_d5m_cmos_sensor_line_valid  : in    std_logic                     := 'X';
-            trdb_d5m_cmos_sensor_data        : in    std_logic_vector(11 downto 0) := (others => 'X');
+            trdb_d5m_cmos_sensor_data        : in    std_logic_vector(15 downto 0) := (others => 'X');
             trdb_d5m_i2c_scl                 : inout std_logic                     := 'X';
             trdb_d5m_i2c_sda                 : inout std_logic                     := 'X';
             trdb_d5m_pixclk_clk              : in    std_logic                     := 'X'
@@ -182,7 +182,8 @@ begin
             trdb_d5m_xclkin_clk              => GPIO_0_D5M_XCLKIN,
             trdb_d5m_cmos_sensor_frame_valid => GPIO_0_D5M_FVAL,
             trdb_d5m_cmos_sensor_line_valid  => GPIO_0_D5M_LVAL,
-            trdb_d5m_cmos_sensor_data        => GPIO_0_D5M_D,
+            trdb_d5m_cmos_sensor_data(11 downto 0)  => GPIO_0_D5M_D,
+				trdb_d5m_cmos_sensor_data(15 downto 12) => "0000",
             trdb_d5m_i2c_scl                 => GPIO_0_D5M_SCLK,
             trdb_d5m_i2c_sda                 => GPIO_0_D5M_SDATA,
             trdb_d5m_pixclk_clk              => GPIO_0_D5M_PIXCLK

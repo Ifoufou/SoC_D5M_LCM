@@ -3,7 +3,7 @@
  <component
    name="$${FILENAME}"
    displayName="$${FILENAME}"
-   version="20.1"
+   version="1.0"
    description=""
    tags=""
    categories="System" />
@@ -130,21 +130,21 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="6" />
   <parameter name="CLK_IN_CLOCK_FREQUENCY" value="10000000" />
   <parameter name="CLK_OUT_CLOCK_FREQUENCY" value="50000000" />
-  <parameter name="CMOS_SENSOR_INPUT_DEBAYER_ENABLE" value="false" />
+  <parameter name="CMOS_SENSOR_INPUT_DEBAYER_ENABLE" value="true" />
   <parameter name="CMOS_SENSOR_INPUT_DEVICE_FAMILY" value="Cyclone V" />
-  <parameter name="CMOS_SENSOR_INPUT_FIFO_DEPTH" value="32" />
+  <parameter name="CMOS_SENSOR_INPUT_FIFO_DEPTH" value="256" />
   <parameter name="CMOS_SENSOR_INPUT_MAX_HEIGHT" value="1944" />
   <parameter name="CMOS_SENSOR_INPUT_MAX_WIDTH" value="2592" />
-  <parameter name="CMOS_SENSOR_INPUT_OUTPUT_WIDTH" value="16" />
+  <parameter name="CMOS_SENSOR_INPUT_OUTPUT_WIDTH" value="64" />
   <parameter name="CMOS_SENSOR_INPUT_PACKER_ENABLE" value="false" />
-  <parameter name="CMOS_SENSOR_INPUT_PIX_DEPTH" value="12" />
+  <parameter name="CMOS_SENSOR_INPUT_PIX_DEPTH" value="16" />
   <parameter name="CMOS_SENSOR_INPUT_SAMPLE_EDGE" value="FALLING" />
-  <parameter name="DC_FIFO_DEPTH" value="16" />
-  <parameter name="DC_FIFO_WIDTH" value="32" />
+  <parameter name="DC_FIFO_DEPTH" value="256" />
+  <parameter name="DC_FIFO_WIDTH" value="256" />
   <parameter name="MSGDMA_BURST_ENABLE" value="1" />
-  <parameter name="MSGDMA_DATA_FIFO_DEPTH" value="64" />
-  <parameter name="MSGDMA_DATA_WIDTH" value="32" />
-  <parameter name="MSGDMA_DESCRIPTOR_FIFO_DEPTH" value="8" />
+  <parameter name="MSGDMA_DATA_FIFO_DEPTH" value="256" />
+  <parameter name="MSGDMA_DATA_WIDTH" value="64" />
+  <parameter name="MSGDMA_DESCRIPTOR_FIFO_DEPTH" value="128" />
   <parameter name="MSGDMA_MAX_BURST_COUNT" value="16" />
   <parameter name="MSGDMA_MAX_BYTE" value="8388608" />
  </module>

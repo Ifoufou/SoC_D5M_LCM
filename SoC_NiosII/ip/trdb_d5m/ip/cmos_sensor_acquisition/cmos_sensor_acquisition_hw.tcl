@@ -264,7 +264,7 @@ set_parameter_property CMOS_SENSOR_INPUT_DEBAYER_ENABLE UNITS None
 set_parameter_property CMOS_SENSOR_INPUT_DEBAYER_ENABLE ALLOWED_RANGES {}
 set_parameter_property CMOS_SENSOR_INPUT_DEBAYER_ENABLE DESCRIPTION "Enable Debayering"
 set_parameter_property CMOS_SENSOR_INPUT_DEBAYER_ENABLE HDL_PARAMETER true
-set_parameter_property CMOS_SENSOR_INPUT_DEBAYER_ENABLE ENABLED false
+#set_parameter_property CMOS_SENSOR_INPUT_DEBAYER_ENABLE ENABLED false
 set_parameter_property CMOS_SENSOR_INPUT_DEBAYER_ENABLE GROUP "CMOS Sensor Input"
 
 add_parameter CMOS_SENSOR_INPUT_PACKER_ENABLE BOOLEAN FALSE "Enable packing of multiple pixels into a single output word of size OUTPUT_WIDTH"

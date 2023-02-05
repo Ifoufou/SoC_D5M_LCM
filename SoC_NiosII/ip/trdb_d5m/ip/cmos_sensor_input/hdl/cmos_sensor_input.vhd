@@ -243,7 +243,8 @@ begin
         cmos_sensor_input_debayer_inst : entity work.cmos_sensor_input_debayer
             generic map(PIX_DEPTH_RAW => PIX_DEPTH,
                         PIX_DEPTH_RGB => PIX_DEPTH_RGB,
-                        MAX_WIDTH     => MAX_WIDTH)
+                        INPUT_WIDTH   => 640,
+                        INPUT_HEIGHT  => 480)
             port map(clk                => debayer_clk_in,
                      reset              => debayer_reset_in,
                      stop_and_reset     => debayer_stop_and_reset_in,

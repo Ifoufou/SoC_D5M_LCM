@@ -402,6 +402,8 @@ uint32_t cmos_sensor_input_status_fifo_fill_level(cmos_sensor_input_dev *dev) {
  * Returns the frame width discovered when a GET_FRAME_INFO command was sent.
  */
 uint32_t cmos_sensor_input_frame_info_frame_width(cmos_sensor_input_dev *dev) {
+    if (dev->debayer_enable)
+        return read_frame_info_reg_frame_width_flag(dev)/2;
     return read_frame_info_reg_frame_width_flag(dev);
 }
 
@@ -411,6 +413,8 @@ uint32_t cmos_sensor_input_frame_info_frame_width(cmos_sensor_input_dev *dev) {
  * Returns the frame height discovered when a GET_FRAME_INFO command was sent.
  */
 uint32_t cmos_sensor_input_frame_info_frame_height(cmos_sensor_input_dev *dev) {
+    if (dev->debayer_enable)
+        return read_frame_info_reg_frame_height_flag(dev)/2;
     return read_frame_info_reg_frame_height_flag(dev);
 }
 

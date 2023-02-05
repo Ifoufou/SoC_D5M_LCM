@@ -77,7 +77,7 @@
    {
       datum _originalDeviceFamily
       {
-         value = "Cyclone V";
+         value = "Cyclone IV E";
          type = "String";
       }
    }
@@ -85,7 +85,7 @@
    {
       datum _originalDeviceFamily
       {
-         value = "Cyclone IV E";
+         value = "Cyclone V";
          type = "String";
       }
    }
@@ -197,8 +197,8 @@
    kind="altera_nios2_gen2"
    version="20.1"
    enabled="1">
-  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="7" />
-  <parameter name="AUTO_CLK_RESET_DOMAIN" value="7" />
+  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="4" />
+  <parameter name="AUTO_CLK_RESET_DOMAIN" value="4" />
   <parameter name="AUTO_DEVICE" value="5CSEMA5F31C6" />
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="6" />
   <parameter name="bht_ramBlockType" value="Automatic" />
@@ -591,7 +591,7 @@
   <parameter name="casLatency" value="3" />
   <parameter name="clockRate" value="50000000" />
   <parameter name="columnWidth" value="10" />
-  <parameter name="componentName">$${FILENAME}_sdram_controller_0</parameter>
+  <parameter name="componentName">soc_d5m_niosii_sys_sdram_controller_0</parameter>
   <parameter name="dataWidth" value="16" />
   <parameter name="generateSimulationModel" value="false" />
   <parameter name="initNOPDelay" value="0.0" />
@@ -606,20 +606,20 @@
   <parameter name="registerDataIn" value="true" />
   <parameter name="rowWidth" value="13" />
  </module>
- <module name="trdb_d5m_0" kind="trdb_d5m" version="20.1" enabled="1">
-  <parameter name="AUTO_CLK_SYS_CLOCK_DOMAIN" value="7" />
+ <module name="trdb_d5m_0" kind="trdb_d5m" version="1.0" enabled="1">
+  <parameter name="AUTO_CLK_SYS_CLOCK_DOMAIN" value="4" />
   <parameter name="AUTO_CLK_SYS_CLOCK_RATE" value="50000000" />
-  <parameter name="AUTO_CLK_SYS_RESET_DOMAIN" value="7" />
-  <parameter name="AUTO_CLK_TRDB_D5M_PIXCLK_CLOCK_DOMAIN" value="4" />
+  <parameter name="AUTO_CLK_SYS_RESET_DOMAIN" value="4" />
+  <parameter name="AUTO_CLK_TRDB_D5M_PIXCLK_CLOCK_DOMAIN" value="6" />
   <parameter name="AUTO_CLK_TRDB_D5M_PIXCLK_CLOCK_RATE" value="0" />
-  <parameter name="AUTO_CLK_TRDB_D5M_PIXCLK_RESET_DOMAIN" value="4" />
+  <parameter name="AUTO_CLK_TRDB_D5M_PIXCLK_RESET_DOMAIN" value="6" />
   <parameter name="AUTO_DEVICE" value="5CSEMA5F31C6" />
   <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="6" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x4000000' end='0x8000000' /></address-map>]]></parameter>
   <parameter name="AUTO_MASTER_ADDRESS_WIDTH" value="AddressWidth = 27" />
-  <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_trdb_d5m_0</parameter>
+  <parameter name="AUTO_UNIQUE_ID">soc_d5m_niosii_sys_trdb_d5m_0</parameter>
  </module>
  <connection
    kind="avalon"
