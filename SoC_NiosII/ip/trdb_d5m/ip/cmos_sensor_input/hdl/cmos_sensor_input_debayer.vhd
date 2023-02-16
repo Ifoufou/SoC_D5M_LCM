@@ -82,9 +82,9 @@ begin
 
     process (clk, reset)
         -- temporary variables, representing the value of each independant RGB channel
-        variable mCCD_R : std_logic_vector(PIX_DEPTH_RGB/3 - 1 downto 0);
-        variable mCCD_G : std_logic_vector(PIX_DEPTH_RGB/3 - 1 downto 0);
-        variable mCCD_B : std_logic_vector(PIX_DEPTH_RGB/3 - 1 downto 0);
+        variable mCCD_R : std_logic_vector(PIX_DEPTH_RGB/4 - 1 downto 0);
+        variable mCCD_G : std_logic_vector(PIX_DEPTH_RGB/4 - 1 downto 0);
+        variable mCCD_B : std_logic_vector(PIX_DEPTH_RGB/4 - 1 downto 0);
         
         -- Frame Coordinnate counters
         variable lineCounter : unsigned(integer(ceil(log2(real(INPUT_HEIGHT)))) - 1 downto 0);
@@ -93,8 +93,6 @@ begin
         variable pixelCounter : unsigned(integer(ceil(log2(real(INPUT_HEIGHT*INPUT_WIDTH/4)))) - 1 downto 0);
         -- sending state
         variable sending_state : std_logic;
-        
-        variable i : unsigned(integer(ceil(log2(real(2*INPUT_WIDTH+1)))) - 1 downto 0);
     begin
         if reset = '1' then
             mCCD_R    := (others => '0');
@@ -110,7 +108,6 @@ begin
             start_of_frame_out <= '0';
             end_of_frame_out   <= '0';
             sending_state := '0';
-            i := to_unsigned(0, i'length);
         elsif rising_edge(clk) then
             if stop_and_reset = '1' then
                 mCCD_R    := (others => '0');
@@ -126,7 +123,6 @@ begin
                 start_of_frame_out <= '0';
                 end_of_frame_out   <= '0';
                 sending_state := '0';
-                i := to_unsigned(0, i'length);
             else
                 valid_out <= '0';
                 data_out  <= (others => '0');
@@ -154,13 +150,16 @@ begin
                         --   G2 | B          mDATA_down | mDATAd_down
                         --  ---------      --------------------------
                         --
-                        mCCD_R := mDATA_up(11 downto 0) & "0000";
-                        -- clamp the addition to a 12-bit value but increase its dynamic  
-                        mCCD_G := std_logic_vector(unsigned(mDATA_down)+unsigned(mDATAd_up))(12 downto 1) & "0000";
-                        mCCD_B := mDATAd_down(11 downto 0) & "0000";
+                        mCCD_R := mDATA_up(PIX_DEPTH_RAW-1 downto 0);
+                        -- retrieve the 8 most significant bit from the addition
+                        mCCD_G := std_logic_vector(('0' & unsigned(mDATA_down)) + ('0' & unsigned(mDATAd_up)))(PIX_DEPTH_RAW downto 1);
+                        mCCD_B := mDATAd_down(PIX_DEPTH_RAW-1 downto 0);
                         valid_out <= '1';
-                        -- little endian ?
-                        data_out <= (mCCD_B & mCCD_G & mCCD_R);
+                        -- We add an alpha channel to pad the output to the nearest 2^X size, as it is
+                        -- required by the DMA controller. It will be deleted by a resampler.
+                        -- To be compliant with the resampler (on the lcm side), the output channels
+                        -- are written in this order: (Alpha) Red Green Blue
+                        data_out <= ("00000000" & mCCD_R & mCCD_G & mCCD_B);
                         if pixelCounter < to_unsigned((INPUT_HEIGHT * INPUT_WIDTH)/4 - 1, pixelCounter'length) then
                             pixelCounter := pixelCounter + 1;
                         else

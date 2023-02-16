@@ -15,6 +15,7 @@
 #define TRDB_D5M_COLUMN_BIN_REG_DATA  (3)
 #define TRDB_D5M_COLUMN_SKIP_REG_DATA (3)
 
+
 uint16_t max_pixel_value(uint16_t *frame, uint32_t width, uint32_t height) {
     uint16_t max = 0;
 
@@ -81,8 +82,8 @@ bool write_ppm(uint16_t *frame, uint32_t width, uint32_t height, const char *fil
     return true;
 }
 
-uint16_t max_pixel_value_rgb(uint16_t *frame, uint32_t width, uint32_t height) {
-    uint16_t max = 0;
+uint8_t max_pixel_value_rgb(uint8_t *frame, uint32_t width, uint32_t height) {
+    uint8_t max = 0;
     
     uint32_t height_rgb = height;
     uint32_t width_rgb  = width *4;
@@ -93,7 +94,7 @@ uint16_t max_pixel_value_rgb(uint16_t *frame, uint32_t width, uint32_t height) {
             // for the frame transmission.
             if (col_rgb % 4 == 3)
                 continue;
-            uint16_t current = frame[row_rgb * width_rgb + col_rgb];
+            uint8_t current = frame[row_rgb * width_rgb + col_rgb];
             if (current > max)
                 max = current;
         }
@@ -102,7 +103,7 @@ uint16_t max_pixel_value_rgb(uint16_t *frame, uint32_t width, uint32_t height) {
     return max;
 }
 
-bool write_ppm_rgb(uint16_t *frame, uint32_t width, uint32_t height, const char *filename) {
+bool write_ppm_rgb(uint8_t *frame, uint32_t width, uint32_t height, const char *filename) {
     FILE *foutput = fopen(filename, "w");
     if (!foutput) {
         printf("Error: could not open \"%s\" for writing\n", filename);
@@ -111,7 +112,7 @@ bool write_ppm_rgb(uint16_t *frame, uint32_t width, uint32_t height, const char 
 
     fprintf(foutput, "P3\n"); /* PPM magic number */
     fprintf(foutput, "%" PRIu32 " %" PRIu32 "\n", width, height); /* frame dimensions */
-    fprintf(foutput, "%" PRIu16 "\n", max_pixel_value_rgb(frame, width, height)); /* max value */
+    fprintf(foutput, "%" PRIu8 "\n", max_pixel_value_rgb(frame, width, height)); /* max value */
     
     uint32_t height_rgb = height;
     uint32_t width_rgb  = width *4;
@@ -120,9 +121,9 @@ bool write_ppm_rgb(uint16_t *frame, uint32_t width, uint32_t height, const char 
     {
         for (uint32_t col_rgb = 0; col_rgb < width_rgb; col_rgb+=4)
         {
-            fprintf(foutput, "%05" PRIu16 " ", frame[row_rgb * width_rgb + col_rgb]);     /* R */
-            fprintf(foutput, "%05" PRIu16 " ", frame[row_rgb * width_rgb + col_rgb + 1]); /* G */
-            fprintf(foutput, "%05" PRIu16 " ", frame[row_rgb * width_rgb + col_rgb + 2]); /* B */
+            fprintf(foutput, "%" PRIu8 " ", frame[row_rgb * width_rgb + col_rgb + 2]); /* R */
+            fprintf(foutput, "%" PRIu8 " ", frame[row_rgb * width_rgb + col_rgb + 1]); /* G */
+            fprintf(foutput, "%" PRIu8 " ", frame[row_rgb * width_rgb + col_rgb]);     /* B */
 
             if (col_rgb < (width_rgb - 4)) {
                 fprintf(foutput, " ");
@@ -194,7 +195,7 @@ int main(void) {
      * NOTE: require altera_hostfs to be settled and the usage of gdb-server
      */
     puts("writing image to host");
-    if (!write_ppm_rgb((uint16_t *) frame,
+    if (!write_ppm_rgb((uint8_t *) frame,
                        trdb_d5m_frame_width(&trdb_d5m), trdb_d5m_frame_height(&trdb_d5m),
                        "/mnt/host/image.ppm")) {
         printf("Error: could not write image to file\n");

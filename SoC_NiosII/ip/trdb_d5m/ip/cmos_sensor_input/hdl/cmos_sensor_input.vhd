@@ -43,7 +43,7 @@ entity cmos_sensor_input is
 end entity cmos_sensor_input;
 
 architecture rtl of cmos_sensor_input is
-    constant PIX_DEPTH_RGB : positive := 3 * PIX_DEPTH;
+    constant PIX_DEPTH_RGB : positive := 4 * PIX_DEPTH;
 
     constant FIFO_DATA_WIDTH            : positive := OUTPUT_WIDTH + 1;
     constant FIFO_END_OF_FRAME_BIT_OFST : positive := OUTPUT_WIDTH; -- sc_fifo_data(FIFO_END_OF_FRAME_BIT_OFST) = end_of_frame
