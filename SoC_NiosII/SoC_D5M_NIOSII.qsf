@@ -962,8 +962,57 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO_0_D5M_TRIGGER
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO_0_D5M_XCLKIN
 
 #============================================================
-# GPIO_1, GPIO_1 connect to GPIO Default
+# GPIO_1, GPIO_1 connect to LCM LCD
 #============================================================
+# GPIO_1_18
+set_location_assignment PIN_AK26 -to GPIO_1_LCM_DATA[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO_1_LCM_DATA[6]
+# GPIO_1_19
+set_location_assignment PIN_AH25 -to GPIO_1_LCM_DATA[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO_1_LCM_DATA[7]
+# GPIO_1_20
+set_location_assignment PIN_AJ25 -to GPIO_1_LCM_DATA[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO_1_LCM_DATA[4]
+# GPIO_1_21
+set_location_assignment PIN_AJ24 -to GPIO_1_LCM_DATA[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO_1_LCM_DATA[5]
+# GPIO_1_22
+set_location_assignment PIN_AK24 -to GPIO_1_LCM_DATA[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO_1_LCM_DATA[2]
+# GPIO_1_23
+set_location_assignment PIN_AG23 -to GPIO_1_LCM_DATA[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO_1_LCM_DATA[3]
+# GPIO_1_24
+set_location_assignment PIN_AK23 -to GPIO_1_LCM_DATA[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO_1_LCM_DATA[0]
+# GPIO_1_25
+set_location_assignment PIN_AH23 -to GPIO_1_LCM_DATA[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO_1_LCM_DATA[1]
+# GPIO_1_26
+set_location_assignment PIN_AK22 -to GPIO_1_LCM_VSYNC
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO_1_LCM_VSYNC
+# GPIO_1_28
+set_location_assignment PIN_AH22 -to GPIO_1_LCM_SCLK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO_1_LCM_SCLK
+# GPIO_1_29
+set_location_assignment PIN_AG22 -to GPIO_1_LCM_DCLK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO_1_LCM_DCLK
+# GPIO_1_30
+set_location_assignment PIN_AF24 -to GPIO_1_LCM_GRST
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO_1_LCM_GRST
+# GPIO_1_31
+set_location_assignment PIN_AF23 -to GPIO_1_LCM_SHDB
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO_1_LCM_SHDB
+# GPIO_1_33
+set_location_assignment PIN_AD21 -to GPIO_1_LCM_SCEN
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO_1_LCM_SCEN
+# GPIO_1_34
+set_location_assignment PIN_AA20 -to GPIO_1_LCM_SDAT
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO_1_LCM_SDAT
+# GPIO_1_35
+set_location_assignment PIN_AC22 -to GPIO_1_LCM_HSYNC
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO_1_LCM_HSYNC
+
 set_location_assignment PIN_AB17 -to GPIO_1[0]
 set_location_assignment PIN_AB17 -to GPIO_1_0
 set_location_assignment PIN_AA21 -to GPIO_1[1]
@@ -1110,6 +1159,7 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO_1_34
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO_1[35]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO_1_35
 
+set_global_assignment -name LAST_QUARTUS_VERSION "20.1.1 Lite Edition"
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top

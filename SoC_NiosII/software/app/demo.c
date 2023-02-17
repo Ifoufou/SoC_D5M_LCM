@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "altera_up_avalon_video_pixel_buffer_dma.h"
+
 #include "trdb_d5m.h"
 #include "system.h"
 
@@ -195,6 +197,7 @@ int main(void) {
      * NOTE: require altera_hostfs to be settled and the usage of gdb-server
      */
     puts("writing image to host");
+    /*
     if (!write_ppm_rgb((uint8_t *) frame,
                        trdb_d5m_frame_width(&trdb_d5m), trdb_d5m_frame_height(&trdb_d5m),
                        "/mnt/host/image.ppm")) {
@@ -203,6 +206,28 @@ int main(void) {
     }
     
     printf("image normally written!\n");
+    */
 
+    alt_up_pixel_buffer_dma_dev * pixel_buf_dma_dev;
+    pixel_buf_dma_dev = alt_up_pixel_buffer_dma_open_dev(TRDB_LCM_0_VIDEO_PIXEL_BUFFER_DMA_0_NAME);
+
+    if (pixel_buf_dma_dev == NULL)
+        printf("Error: could not open pixel buffer device\n");
+    else
+        printf("Opened pixel buffer device\n");
+
+    /*
+     * change the primary buffer address to the frame address
+     *
+     */
+    // first change the back buffer address
+    alt_up_pixel_buffer_dma_change_back_buffer_address(pixel_buf_dma_dev, frame);
+    // then swap the buffers (primary <-> back buffer)
+    alt_up_pixel_buffer_dma_swap_buffers(pixel_buf_dma_dev);
+
+    while (1) {
+        trdb_d5m_snapshot(&trdb_d5m, frame, frame_size);
+        puts("frame out");
+    }
     return EXIT_SUCCESS;
 }

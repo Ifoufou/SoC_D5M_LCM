@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system name="$${FILENAME}">
+ <component
+   name="$${FILENAME}"
+   displayName="$${FILENAME}"
+   version="1.0"
+   description=""
+   tags=""
+   categories="System" />
+ <parameter name="bonusData"><![CDATA[bonusData 
+{
+   element lcm_clk
+   {
+      datum _sortIndex
+      {
+         value = "5";
+         type = "int";
+      }
+   }
+   element lcm_controller_0
+   {
+      datum _sortIndex
+      {
+         value = "6";
+         type = "int";
+      }
+   }
+   element mm_bridge_0
+   {
+      datum _sortIndex
+      {
+         value = "1";
+         type = "int";
+      }
+   }
+   element sys_clk
+   {
+      datum _sortIndex
+      {
+         value = "0";
+         type = "int";
+      }
+   }
+   element video_dual_clock_buffer_0
+   {
+      datum _sortIndex
+      {
+         value = "4";
+         type = "int";
+      }
+   }
+   element video_pixel_buffer_dma_0
+   {
+      datum _sortIndex
+      {
+         value = "2";
+         type = "int";
+      }
+   }
+   element video_pixel_buffer_dma_0.avalon_control_slave
+   {
+      datum baseAddress
+      {
+         value = "0";
+         type = "String";
+      }
+   }
+   element video_rgb_resampler_0
+   {
+      datum _sortIndex
+      {
+         value = "3";
+         type = "int";
+      }
+   }
+   element video_rgb_resampler_0.avalon_rgb_slave
+   {
+      datum baseAddress
+      {
+         value = "16";
+         type = "String";
+      }
+   }
+}
+]]></parameter>
+ <parameter name="clockCrossingAdapter" value="HANDSHAKE" />
+ <parameter name="device" value="5CSEMA5F31C6" />
+ <parameter name="deviceFamily" value="Cyclone V" />
+ <parameter name="deviceSpeedGrade" value="6" />
+ <parameter name="fabricMode" value="QSYS" />
+ <parameter name="generateLegacySim" value="false" />
+ <parameter name="generationId" value="0" />
+ <parameter name="globalResetBus" value="false" />
+ <parameter name="hdlLanguage" value="VERILOG" />
+ <parameter name="hideFromIPCatalog" value="false" />
+ <parameter name="lockedInterfaceDefinition" value="" />
+ <parameter name="maxAdditionalLatency" value="1" />
+ <parameter name="projectName" value="" />
+ <parameter name="sopcBorderPoints" value="false" />
+ <parameter name="systemHash" value="0" />
+ <parameter name="testBenchDutName" value="" />
+ <parameter name="timeStamp" value="0" />
+ <parameter name="useTestBenchNamingPattern" value="false" />
+ <instanceScript></instanceScript>
+ <interface name="clk_sys" internal="sys_clk.clk_in" type="clock" dir="end" />
+ <interface name="lcm_clk_clk" internal="lcm_clk.clk_in" type="clock" dir="end" />
+ <interface
+   name="lcm_clk_reset"
+   internal="lcm_clk.clk_in_reset"
+   type="reset"
+   dir="end" />
+ <interface
+   name="lcm_device_control_signals"
+   internal="lcm_controller_0.conduit_end"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="pixel_out_dma_master"
+   internal="video_pixel_buffer_dma_0.avalon_pixel_dma_master"
+   type="avalon"
+   dir="start" />
+ <interface name="reset" internal="sys_clk.clk_in_reset" type="reset" dir="end" />
+ <interface name="slave" internal="mm_bridge_0.s0" type="avalon" dir="end" />
+ <module name="lcm_clk" kind="clock_source" version="20.1" enabled="1">
+  <parameter name="clockFrequency" value="18420000" />
+  <parameter name="clockFrequencyKnown" value="true" />
+  <parameter name="inputClockFrequency" value="0" />
+  <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <module
+   name="lcm_controller_0"
+   kind="lcm_controller"
+   version="1.0"
+   enabled="1" />
+ <module
+   name="mm_bridge_0"
+   kind="altera_avalon_mm_bridge"
+   version="20.1"
+   enabled="1">
+  <parameter name="ADDRESS_UNITS" value="SYMBOLS" />
+  <parameter name="ADDRESS_WIDTH" value="10" />
+  <parameter name="DATA_WIDTH" value="32" />
+  <parameter name="LINEWRAPBURSTS" value="0" />
+  <parameter name="MAX_BURST_SIZE" value="1" />
+  <parameter name="MAX_PENDING_RESPONSES" value="4" />
+  <parameter name="PIPELINE_COMMAND" value="1" />
+  <parameter name="PIPELINE_RESPONSE" value="1" />
+  <parameter name="SYMBOL_WIDTH" value="8" />
+  <parameter name="SYSINFO_ADDR_WIDTH" value="5" />
+  <parameter name="USE_AUTO_ADDRESS_WIDTH" value="1" />
+  <parameter name="USE_RESPONSE" value="0" />
+ </module>
+ <module name="sys_clk" kind="clock_source" version="20.1" enabled="1">
+  <parameter name="clockFrequency" value="50000000" />
+  <parameter name="clockFrequencyKnown" value="true" />
+  <parameter name="inputClockFrequency" value="0" />
+  <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <module
+   name="video_dual_clock_buffer_0"
+   kind="altera_up_avalon_video_dual_clock_buffer"
+   version="18.0"
+   enabled="1">
+  <parameter name="AUTO_CLOCK_STREAM_IN_CLOCK_RATE" value="50000000" />
+  <parameter name="AUTO_CLOCK_STREAM_OUT_CLOCK_RATE" value="18420000" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+  <parameter name="color_bits" value="8" />
+  <parameter name="color_planes" value="3" />
+ </module>
+ <module
+   name="video_pixel_buffer_dma_0"
+   kind="altera_up_avalon_video_pixel_buffer_dma"
+   version="18.0"
+   enabled="1">
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="50000000" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+  <parameter name="addr_mode" value="Consecutive" />
+  <parameter name="back_start_address" value="0" />
+  <parameter name="color_space" value="32-bit RGBA" />
+  <parameter name="image_height" value="240" />
+  <parameter name="image_width" value="320" />
+  <parameter name="start_address" value="0" />
+ </module>
+ <module
+   name="video_rgb_resampler_0"
+   kind="altera_up_avalon_video_rgb_resampler"
+   version="18.0"
+   enabled="1">
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="50000000" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+  <parameter name="alpha" value="1023" />
+  <parameter name="input_type" value="32-bit RGBA" />
+  <parameter name="output_type" value="24-bit RGB" />
+ </module>
+ <connection
+   kind="avalon"
+   version="20.1"
+   start="mm_bridge_0.m0"
+   end="video_pixel_buffer_dma_0.avalon_control_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="20.1"
+   start="mm_bridge_0.m0"
+   end="video_rgb_resampler_0.avalon_rgb_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0010" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon_streaming"
+   version="20.1"
+   start="video_dual_clock_buffer_0.avalon_dc_buffer_source"
+   end="lcm_controller_0.avalon_streaming_sink" />
+ <connection
+   kind="avalon_streaming"
+   version="20.1"
+   start="video_pixel_buffer_dma_0.avalon_pixel_source"
+   end="video_rgb_resampler_0.avalon_rgb_sink" />
+ <connection
+   kind="avalon_streaming"
+   version="20.1"
+   start="video_rgb_resampler_0.avalon_rgb_source"
+   end="video_dual_clock_buffer_0.avalon_dc_buffer_sink" />
+ <connection
+   kind="clock"
+   version="20.1"
+   start="sys_clk.clk"
+   end="video_pixel_buffer_dma_0.clk" />
+ <connection kind="clock" version="20.1" start="sys_clk.clk" end="mm_bridge_0.clk" />
+ <connection
+   kind="clock"
+   version="20.1"
+   start="sys_clk.clk"
+   end="video_rgb_resampler_0.clk" />
+ <connection
+   kind="clock"
+   version="20.1"
+   start="lcm_clk.clk"
+   end="lcm_controller_0.clock" />
+ <connection
+   kind="clock"
+   version="20.1"
+   start="sys_clk.clk"
+   end="video_dual_clock_buffer_0.clock_stream_in" />
+ <connection
+   kind="clock"
+   version="20.1"
+   start="lcm_clk.clk"
+   end="video_dual_clock_buffer_0.clock_stream_out" />
+ <connection
+   kind="reset"
+   version="20.1"
+   start="sys_clk.clk_reset"
+   end="video_pixel_buffer_dma_0.reset" />
+ <connection
+   kind="reset"
+   version="20.1"
+   start="sys_clk.clk_reset"
+   end="mm_bridge_0.reset" />
+ <connection
+   kind="reset"
+   version="20.1"
+   start="sys_clk.clk_reset"
+   end="video_rgb_resampler_0.reset" />
+ <connection
+   kind="reset"
+   version="20.1"
+   start="lcm_clk.clk_reset"
+   end="lcm_controller_0.reset" />
+ <connection
+   kind="reset"
+   version="20.1"
+   start="sys_clk.clk_reset"
+   end="video_dual_clock_buffer_0.reset_stream_in" />
+ <connection
+   kind="reset"
+   version="20.1"
+   start="lcm_clk.clk_reset"
+   end="video_dual_clock_buffer_0.reset_stream_out" />
+ <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
+ <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
+ <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />
+ <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
+</system>

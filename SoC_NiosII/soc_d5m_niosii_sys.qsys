@@ -21,7 +21,7 @@
    {
       datum _sortIndex
       {
-         value = "5";
+         value = "6";
          type = "int";
       }
    }
@@ -61,8 +61,13 @@
    {
       datum _sortIndex
       {
-         value = "3";
+         value = "4";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
       }
    }
    element sdram_controller_0.s1
@@ -77,23 +82,23 @@
    {
       datum _originalDeviceFamily
       {
+         value = "Cyclone V";
+         type = "String";
+      }
+   }
+   element system
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone V";
+         type = "String";
+      }
+   }
+   element system
+   {
+      datum _originalDeviceFamily
+      {
          value = "Cyclone IV E";
-         type = "String";
-      }
-   }
-   element system
-   {
-      datum _originalDeviceFamily
-      {
-         value = "Cyclone V";
-         type = "String";
-      }
-   }
-   element system
-   {
-      datum _originalDeviceFamily
-      {
-         value = "Cyclone V";
          type = "String";
       }
    }
@@ -101,7 +106,7 @@
    {
       datum _sortIndex
       {
-         value = "4";
+         value = "3";
          type = "int";
       }
    }
@@ -111,6 +116,19 @@
       {
          value = "134221824";
          type = "String";
+      }
+   }
+   element trdb_lcm_0
+   {
+      datum _sortIndex
+      {
+         value = "5";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
       }
    }
 }
@@ -138,6 +156,7 @@
  <interface name="clk_0" internal="trdb_d5m_0.clk" />
  <interface name="clk_1" internal="trdb_d5m_0.clk_0" />
  <interface name="clk_2" internal="trdb_d5m_0.clk_1" />
+ <interface name="lcm_pll" internal="trdb_lcm_0.clk_trdb_lcm_clk_in" />
  <interface name="reset" internal="clk_0.clk_in_reset" type="reset" dir="end" />
  <interface name="reset_1" internal="trdb_d5m_0.reset_0" />
  <interface name="reset_2" internal="trdb_d5m_0.reset_1" />
@@ -167,6 +186,11 @@
    internal="pll_0.outclk2"
    type="clock"
    dir="start" />
+ <interface
+   name="trdb_lcm_out_signals"
+   internal="trdb_lcm_0.lcm_device_control_signals"
+   type="conduit"
+   dir="end" />
  <module name="clk_0" kind="clock_source" version="20.1" enabled="1">
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="clockFrequencyKnown" value="true" />
@@ -216,7 +240,7 @@
   <parameter name="dataAddrWidth" value="28" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x4000000' end='0x8000000' type='altera_avalon_new_sdram_controller.s1' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x8000800' end='0x8001000' type='altera_nios2_gen2.debug_mem_slave' /><slave name='trdb_d5m_0_cmos_sensor_acquisition_0_msgdma_0.csr' start='0x8001000' end='0x8001020' type='altera_msgdma.csr' /><slave name='trdb_d5m_0_cmos_sensor_acquisition_0_msgdma_0.descriptor_slave' start='0x8001020' end='0x8001030' type='altera_msgdma.descriptor_slave' /><slave name='trdb_d5m_0_cmos_sensor_acquisition_0_cmos_sensor_input_0.avalon_slave' start='0x8001030' end='0x8001040' type='cmos_sensor_input.avalon_slave' /><slave name='trdb_d5m_0_i2c_0.avalon_slave' start='0x8001040' end='0x8001044' type='i2c.avalon_slave' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x8001080' end='0x8001088' type='altera_avalon_jtag_uart.avalon_jtag_slave' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='trdb_lcm_0_video_pixel_buffer_dma_0.avalon_control_slave' start='0x0' end='0x10' type='altera_up_avalon_video_pixel_buffer_dma.avalon_control_slave' /><slave name='trdb_lcm_0_video_rgb_resampler_0.avalon_rgb_slave' start='0x10' end='0x14' type='altera_up_avalon_video_rgb_resampler.avalon_rgb_slave' /><slave name='sdram_controller_0.s1' start='0x4000000' end='0x8000000' type='altera_avalon_new_sdram_controller.s1' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x8000800' end='0x8001000' type='altera_nios2_gen2.debug_mem_slave' /><slave name='trdb_d5m_0_cmos_sensor_acquisition_0_msgdma_0.csr' start='0x8001000' end='0x8001020' type='altera_msgdma.csr' /><slave name='trdb_d5m_0_cmos_sensor_acquisition_0_msgdma_0.descriptor_slave' start='0x8001020' end='0x8001030' type='altera_msgdma.descriptor_slave' /><slave name='trdb_d5m_0_cmos_sensor_acquisition_0_cmos_sensor_input_0.avalon_slave' start='0x8001030' end='0x8001040' type='cmos_sensor_input.avalon_slave' /><slave name='trdb_d5m_0_i2c_0.avalon_slave' start='0x8001040' end='0x8001044' type='i2c.avalon_slave' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x8001080' end='0x8001088' type='altera_avalon_jtag_uart.avalon_jtag_slave' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -491,7 +515,7 @@
   <parameter name="gui_fractional_cout" value="32" />
   <parameter name="gui_mif_generate" value="false" />
   <parameter name="gui_multiply_factor" value="1" />
-  <parameter name="gui_number_of_clocks" value="3" />
+  <parameter name="gui_number_of_clocks" value="4" />
   <parameter name="gui_operation_mode" value="direct" />
   <parameter name="gui_output_clock_frequency0" value="50.0" />
   <parameter name="gui_output_clock_frequency1" value="50.0" />
@@ -504,7 +528,7 @@
   <parameter name="gui_output_clock_frequency16" value="100.0" />
   <parameter name="gui_output_clock_frequency17" value="100.0" />
   <parameter name="gui_output_clock_frequency2" value="10.0" />
-  <parameter name="gui_output_clock_frequency3" value="10.0" />
+  <parameter name="gui_output_clock_frequency3" value="18.42" />
   <parameter name="gui_output_clock_frequency4" value="100.0" />
   <parameter name="gui_output_clock_frequency5" value="100.0" />
   <parameter name="gui_output_clock_frequency6" value="100.0" />
@@ -610,9 +634,9 @@
   <parameter name="AUTO_CLK_SYS_CLOCK_DOMAIN" value="4" />
   <parameter name="AUTO_CLK_SYS_CLOCK_RATE" value="50000000" />
   <parameter name="AUTO_CLK_SYS_RESET_DOMAIN" value="4" />
-  <parameter name="AUTO_CLK_TRDB_D5M_PIXCLK_CLOCK_DOMAIN" value="6" />
+  <parameter name="AUTO_CLK_TRDB_D5M_PIXCLK_CLOCK_DOMAIN" value="7" />
   <parameter name="AUTO_CLK_TRDB_D5M_PIXCLK_CLOCK_RATE" value="0" />
-  <parameter name="AUTO_CLK_TRDB_D5M_PIXCLK_RESET_DOMAIN" value="6" />
+  <parameter name="AUTO_CLK_TRDB_D5M_PIXCLK_RESET_DOMAIN" value="7" />
   <parameter name="AUTO_DEVICE" value="5CSEMA5F31C6" />
   <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="6" />
@@ -620,6 +644,23 @@
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x4000000' end='0x8000000' /></address-map>]]></parameter>
   <parameter name="AUTO_MASTER_ADDRESS_WIDTH" value="AddressWidth = 27" />
   <parameter name="AUTO_UNIQUE_ID">soc_d5m_niosii_sys_trdb_d5m_0</parameter>
+ </module>
+ <module name="trdb_lcm_0" kind="trdb_lcm" version="1.0" enabled="1">
+  <parameter name="AUTO_CLK_SYS_CLOCK_DOMAIN" value="4" />
+  <parameter name="AUTO_CLK_SYS_CLOCK_RATE" value="50000000" />
+  <parameter name="AUTO_CLK_SYS_RESET_DOMAIN" value="4" />
+  <parameter name="AUTO_DEVICE" value="5CSEMA5F31C6" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="6" />
+  <parameter name="AUTO_GENERATION_ID" value="0" />
+  <parameter name="AUTO_LCM_CLK_CLK_CLOCK_DOMAIN" value="5" />
+  <parameter name="AUTO_LCM_CLK_CLK_CLOCK_RATE" value="18421052" />
+  <parameter name="AUTO_LCM_CLK_CLK_RESET_DOMAIN" value="5" />
+  <parameter name="AUTO_PIXEL_OUT_DMA_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x4000000' end='0x8000000' /></address-map>]]></parameter>
+  <parameter
+     name="AUTO_PIXEL_OUT_DMA_MASTER_ADDRESS_WIDTH"
+     value="AddressWidth = 27" />
+  <parameter name="AUTO_UNIQUE_ID">soc_d5m_niosii_sys_trdb_lcm_0</parameter>
  </module>
  <connection
    kind="avalon"
@@ -660,6 +701,15 @@
  <connection
    kind="avalon"
    version="20.1"
+   start="nios2_gen2_0.data_master"
+   end="trdb_lcm_0.slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="20.1"
    start="nios2_gen2_0.instruction_master"
    end="nios2_gen2_0.debug_mem_slave">
   <parameter name="arbitrationPriority" value="1" />
@@ -679,6 +729,15 @@
    kind="avalon"
    version="20.1"
    start="trdb_d5m_0.master"
+   end="sdram_controller_0.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x04000000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="20.1"
+   start="trdb_lcm_0.pixel_out_dma_master"
    end="sdram_controller_0.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x04000000" />
@@ -705,6 +764,16 @@
    version="20.1"
    start="pll_0.outclk0"
    end="trdb_d5m_0.clk_sys" />
+ <connection
+   kind="clock"
+   version="20.1"
+   start="pll_0.outclk0"
+   end="trdb_lcm_0.clk_sys" />
+ <connection
+   kind="clock"
+   version="20.1"
+   start="pll_0.outclk3"
+   end="trdb_lcm_0.lcm_clk_clk" />
  <connection
    kind="interrupt"
    version="20.1"
@@ -733,6 +802,11 @@
    end="trdb_d5m_0.msgdma_csr_irq">
   <parameter name="irqNumber" value="2" />
  </connection>
+ <connection
+   kind="reset"
+   version="20.1"
+   start="clk_0.clk_reset"
+   end="trdb_lcm_0.lcm_clk_reset" />
  <connection kind="reset" version="20.1" start="clk_0.clk_reset" end="pll_0.reset" />
  <connection
    kind="reset"
@@ -757,6 +831,11 @@
  <connection
    kind="reset"
    version="20.1"
+   start="clk_0.clk_reset"
+   end="trdb_lcm_0.reset" />
+ <connection
+   kind="reset"
+   version="20.1"
    start="nios2_gen2_0.debug_reset_request"
    end="nios2_gen2_0.reset" />
  <connection
@@ -774,6 +853,11 @@
    version="20.1"
    start="nios2_gen2_0.debug_reset_request"
    end="jtag_uart_0.reset" />
+ <connection
+   kind="reset"
+   version="20.1"
+   start="nios2_gen2_0.debug_reset_request"
+   end="trdb_lcm_0.reset" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
  <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />
