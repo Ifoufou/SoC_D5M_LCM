@@ -152,10 +152,33 @@ bool cmos_sensor_acquisition_snapshot(cmos_sensor_acquisition_dev *dev, void *fr
     }
 
     /* start cmos_sensor_input capture logic */
+    //cmos_sensor_input_command_snapshot_async(&dev->cmos_sensor_input);
     if (!cmos_sensor_input_command_snapshot_sync(&dev->cmos_sensor_input)) {
         return false;
     }
-
     msgdma_wait_until_idle(&dev->msgdma);
+
     return true;
+}
+
+void cmos_sensor_acquisition_loop(cmos_sensor_acquisition_dev *dev, void *frame, size_t frame_size) {
+    msgdma_standard_descriptor desc;
+    if (msgdma_construct_standard_st_to_mm_descriptor(&dev->msgdma, &desc, frame, frame_size, 0)) {
+        return false;
+    }
+
+    while (1) {
+        /* send async dma transfer command to have the dma unit ready for data in
+         * the fifo */
+        if (msgdma_standard_descriptor_async_transfer(&dev->msgdma, &desc)) {
+            return false;
+        }
+
+        /* start cmos_sensor_input capture logic */
+        //cmos_sensor_input_command_snapshot_async(&dev->cmos_sensor_input);
+        if (!cmos_sensor_input_command_snapshot_sync(&dev->cmos_sensor_input)) {
+            return false;
+        }
+        msgdma_wait_until_idle(&dev->msgdma);
+    }
 }

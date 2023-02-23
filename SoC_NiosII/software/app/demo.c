@@ -2,6 +2,7 @@
 #include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "altera_up_avalon_video_pixel_buffer_dma.h"
 
@@ -225,9 +226,10 @@ int main(void) {
     // then swap the buffers (primary <-> back buffer)
     alt_up_pixel_buffer_dma_swap_buffers(pixel_buf_dma_dev);
 
-    while (1) {
-        trdb_d5m_snapshot(&trdb_d5m, frame, frame_size);
-        puts("frame out");
-    }
+    trdb_d5m_cam_loop(&trdb_d5m, frame, frame_size);
+    //while (1) {
+    //    trdb_d5m_snapshot(&trdb_d5m, frame, frame_size);
+    //}
+
     return EXIT_SUCCESS;
 }

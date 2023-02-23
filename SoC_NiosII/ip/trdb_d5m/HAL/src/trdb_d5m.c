@@ -87,6 +87,53 @@ bool trdb_d5m_configure(trdb_d5m_dev *dev,
     success &= trdb_d5m_read(dev, TRDB_D5M_READ_MODE_1_REG, &buffer);
     write_data = TRDB_D5M_READ_MODE_1_REG_SNAPSHOT_WRITE(buffer, continuous ? 0 : 1);
     success &= trdb_d5m_write(dev, TRDB_D5M_READ_MODE_1_REG, write_data);
+    
+    /* TRDB_D5M_SHUTTER_WIDTH_LOWER_REG */
+    // max 478 for 77.4 fps at PIXCLK=96 Mhz
+    // 0x797 default value
+    write_data = TRDB_D5M_SHUTTER_WIDTH_LOWER_REG_WRITE(buffer, 0x797);
+    success &= trdb_d5m_write(dev, TRDB_D5M_SHUTTER_WIDTH_LOWER_REG, write_data);
+
+    // enter standby mode
+    //success &= trdb_d5m_read(dev, TRDB_D5M_OUTPUT_CONTROL_REG_DEFAULT, &buffer);
+    //write_data = TRDB_D5M_OUTPUT_CONTROL_REG_CHIP_ENABLE_WRITE(buffer, 0);
+    //success &= trdb_d5m_write(dev, TRDB_D5M_OUTPUT_CONTROL_REG_DEFAULT, write_data);
+    
+    usleep(1);
+    
+    /*
+     *  Internal D5M PLL Configuration
+     *  Goal: obtain PIXCLK=96Mhz from XCLKIN=24Mhz
+     *  PIXCLK = 24 x 72 / (6 x 3) = 96 Mhz
+     */ 
+    // retrieve the already setted default content (0x0050)
+    success &= trdb_d5m_read(dev, TRDB_D5M_PLL_CONTROL_REG, &buffer);
+    
+    // power-up pll but don't use it now
+    write_data = TRDB_D5M_PLL_CONTROL_REG_POWER_PLL_WRITE(buffer, 1) | TRDB_D5M_PLL_CONTROL_REG_USE_PLL_WRITE(buffer, 0);
+    //success &= trdb_d5m_write(dev, TRDB_D5M_PLL_CONTROL_REG, 0x0051);
+    // set factor (0x48=72) and first divider (0x5 => 6, PLL_n_divider+1)
+    success &= trdb_d5m_read(dev, TRDB_D5M_PLL_CONFIG_1_REG, &buffer);
+    write_data = TRDB_D5M_PLL_CONFIG_1_REG_PLL_M_FACTOR_WRITE(buffer, 0x48) | TRDB_D5M_PLL_CONFIG_1_REG_PLL_N_DIVIDER_WRITE(buffer, 0x05);
+    //success &= trdb_d5m_write(dev, TRDB_D5M_PLL_CONFIG_1_REG, 0x4805);
+    // set second divider (0x2 => 3, PLL_p1_divider+1)
+    success &= trdb_d5m_read(dev, TRDB_D5M_PLL_CONFIG_2_REG, &buffer);
+    write_data = TRDB_D5M_PLL_CONFIG_2_REG_PLL_P1_DIVIDER_WRITE(buffer, 0x02);
+    //success &= trdb_d5m_write(dev, TRDB_D5M_PLL_CONFIG_2_REG, 0x0002);
+    // wait 1ms for VCO to lock (see doc)
+    usleep(1);
+    // maintain the power-up and trigger the usage now
+    success &= trdb_d5m_read(dev, TRDB_D5M_PLL_CONTROL_REG, &buffer);
+    write_data = TRDB_D5M_PLL_CONTROL_REG_POWER_PLL_WRITE(buffer, 1) | TRDB_D5M_PLL_CONTROL_REG_USE_PLL_WRITE(buffer, 1);
+    //success &= trdb_d5m_write(dev, TRDB_D5M_PLL_CONTROL_REG, 0x0053);
+    usleep(1);
+    
+    // leave standbye
+    //success &= trdb_d5m_read(dev, TRDB_D5M_OUTPUT_CONTROL_REG_DEFAULT, &buffer);
+    //write_data = TRDB_D5M_OUTPUT_CONTROL_REG_CHIP_ENABLE_WRITE(buffer, 0);
+    //success &= trdb_d5m_write(dev, TRDB_D5M_OUTPUT_CONTROL_REG_DEFAULT, write_data);
+    
+    usleep(1);
 
     cmos_sensor_acquisition_configure(&dev->cmos_sensor_acquisition);
 
@@ -132,6 +179,10 @@ bool trdb_d5m_read(trdb_d5m_dev *dev, uint8_t register_offset, uint16_t *data) {
  */
 bool trdb_d5m_snapshot(trdb_d5m_dev *dev, void *frame, size_t frame_size) {
     return cmos_sensor_acquisition_snapshot(&dev->cmos_sensor_acquisition, frame, frame_size);
+}
+
+void trdb_d5m_cam_loop(trdb_d5m_dev *dev, void *frame, size_t frame_size) {
+    return cmos_sensor_acquisition_loop(&dev->cmos_sensor_acquisition, frame, frame_size);
 }
 
 /*

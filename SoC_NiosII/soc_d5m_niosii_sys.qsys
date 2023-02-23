@@ -82,23 +82,23 @@
    {
       datum _originalDeviceFamily
       {
-         value = "Cyclone V";
-         type = "String";
-      }
-   }
-   element system
-   {
-      datum _originalDeviceFamily
-      {
-         value = "Cyclone V";
-         type = "String";
-      }
-   }
-   element system
-   {
-      datum _originalDeviceFamily
-      {
          value = "Cyclone IV E";
+         type = "String";
+      }
+   }
+   element system
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone V";
+         type = "String";
+      }
+   }
+   element system
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone V";
          type = "String";
       }
    }
@@ -527,7 +527,7 @@
   <parameter name="gui_output_clock_frequency15" value="100.0" />
   <parameter name="gui_output_clock_frequency16" value="100.0" />
   <parameter name="gui_output_clock_frequency17" value="100.0" />
-  <parameter name="gui_output_clock_frequency2" value="10.0" />
+  <parameter name="gui_output_clock_frequency2" value="75.0" />
   <parameter name="gui_output_clock_frequency3" value="18.42" />
   <parameter name="gui_output_clock_frequency4" value="100.0" />
   <parameter name="gui_output_clock_frequency5" value="100.0" />

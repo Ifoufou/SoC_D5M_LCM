@@ -128,7 +128,7 @@
   <parameter name="AUTO_DEVICE" value="5CSEMA5F31C6" />
   <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="6" />
-  <parameter name="CLK_IN_CLOCK_FREQUENCY" value="10000000" />
+  <parameter name="CLK_IN_CLOCK_FREQUENCY" value="75000000" />
   <parameter name="CLK_OUT_CLOCK_FREQUENCY" value="50000000" />
   <parameter name="CMOS_SENSOR_INPUT_DEBAYER_ENABLE" value="true" />
   <parameter name="CMOS_SENSOR_INPUT_DEVICE_FAMILY" value="Cyclone V" />
@@ -142,9 +142,9 @@
   <parameter name="DC_FIFO_DEPTH" value="16" />
   <parameter name="DC_FIFO_WIDTH" value="64" />
   <parameter name="MSGDMA_BURST_ENABLE" value="1" />
-  <parameter name="MSGDMA_DATA_FIFO_DEPTH" value="64" />
+  <parameter name="MSGDMA_DATA_FIFO_DEPTH" value="4096" />
   <parameter name="MSGDMA_DATA_WIDTH" value="64" />
-  <parameter name="MSGDMA_DESCRIPTOR_FIFO_DEPTH" value="8" />
+  <parameter name="MSGDMA_DESCRIPTOR_FIFO_DEPTH" value="1024" />
   <parameter name="MSGDMA_MAX_BURST_COUNT" value="16" />
   <parameter name="MSGDMA_MAX_BYTE" value="8388608" />
  </module>
@@ -174,7 +174,7 @@
   <parameter name="resetSynchronousEdges" value="NONE" />
  </module>
  <module name="trdb_d5m_pixclk" kind="clock_source" version="20.1" enabled="1">
-  <parameter name="clockFrequency" value="10000000" />
+  <parameter name="clockFrequency" value="75000000" />
   <parameter name="clockFrequencyKnown" value="true" />
   <parameter name="inputClockFrequency" value="0" />
   <parameter name="resetSynchronousEdges" value="NONE" />

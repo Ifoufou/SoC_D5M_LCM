@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "cmos_sensor_acquisition.h"
 #include "i2c.h"
@@ -77,6 +78,7 @@ bool trdb_d5m_configure(trdb_d5m_dev *dev,
                         uint16_t column_bin, uint16_t column_skip,
                         bool     continuous);
 
+void trdb_d5m_cam_loop(trdb_d5m_dev *dev, void *frame, size_t frame_size);
 bool trdb_d5m_write(trdb_d5m_dev *trdb_d5m, uint8_t register_offset, uint16_t data);
 bool trdb_d5m_read(trdb_d5m_dev *trdb_d5m, uint8_t register_offset, uint16_t *data);
 bool trdb_d5m_snapshot(trdb_d5m_dev *dev, void *frame, size_t frame_size);
