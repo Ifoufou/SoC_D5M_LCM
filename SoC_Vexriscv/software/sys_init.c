@@ -40,8 +40,6 @@
  */
 
 #include "system.h"
-#include "sys/alt_irq.h"
-#include "sys/alt_sys_init.h"
 
 #include <stddef.h>
 
@@ -59,30 +57,11 @@
  * Allocate the device storage
  */
 
-//ALTERA_NIOS2_GEN2_IRQ_INSTANCE ( NIOS2_GEN2_0, nios2_gen2_0);
+InterruptController* g_InterruptController = (InterruptController*)(MEMADDR_IRQCONTROLLER);
 ALTERA_AVALON_JTAG_UART_INSTANCE ( JTAG_UART_0, jtag_uart_0);
 ALTERA_MSGDMA_CSR_DESCRIPTOR_SLAVE_INSTANCE ( TRDB_D5M_0_CMOS_SENSOR_ACQUISITION_0_MSGDMA_0, TRDB_D5M_0_CMOS_SENSOR_ACQUISITION_0_MSGDMA_0_CSR, TRDB_D5M_0_CMOS_SENSOR_ACQUISITION_0_MSGDMA_0_DESCRIPTOR_SLAVE, trdb_d5m_0_cmos_sensor_acquisition_0_msgdma_0);
 ALTERA_UP_AVALON_VIDEO_PIXEL_BUFFER_DMA_INSTANCE ( TRDB_LCM_0_VIDEO_PIXEL_BUFFER_DMA_0, trdb_lcm_0_video_pixel_buffer_dma_0);
 ALTERA_UP_AVALON_VIDEO_RGB_RESAMPLER_INSTANCE ( TRDB_LCM_0_VIDEO_RGB_RESAMPLER_0, trdb_lcm_0_video_rgb_resampler_0);
-
-/*
- * Initialize the interrupt controller devices
- * and then enable interrupts in the CPU.
- * Called before alt_sys_init().
- * The "base" parameter is ignored and only
- * present for backwards-compatibility.
- */
-
-void alt_irq_init ( const void* base )
-{
-    ALTERA_NIOS2_GEN2_IRQ_INIT ( NIOS2_GEN2_0, nios2_gen2_0);
-    alt_irq_cpu_enable_interrupts();
-}
-
-/*
- * Initialize the non-interrupt controller devices.
- * Called after alt_irq_init().
- */
 
 void alt_sys_init( void )
 {

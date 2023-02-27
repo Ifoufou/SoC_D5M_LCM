@@ -33,78 +33,60 @@
 /* Include definitions from linker script generator */
 #include "linker.h"
 
+#include <stdint.h>
 
-/*
- * CPU configuration
- *
- */
+#include "uart.h"
 
-#define ALT_CPU_ARCHITECTURE "altera_nios2_gen2"
-#define ALT_CPU_BIG_ENDIAN 0
-#define ALT_CPU_BREAK_ADDR 0x08000820
-#define ALT_CPU_CPU_ARCH_NIOS2_R1
-#define ALT_CPU_CPU_FREQ 50000000u
-#define ALT_CPU_CPU_ID_SIZE 1
-#define ALT_CPU_CPU_ID_VALUE 0x00000000
-#define ALT_CPU_CPU_IMPLEMENTATION "tiny"
-#define ALT_CPU_DATA_ADDR_WIDTH 0x1c
-#define ALT_CPU_DCACHE_LINE_SIZE 0
-#define ALT_CPU_DCACHE_LINE_SIZE_LOG2 0
-#define ALT_CPU_DCACHE_SIZE 0
-#define ALT_CPU_EXCEPTION_ADDR 0x00000020
-#define ALT_CPU_FLASH_ACCELERATOR_LINES 0
-#define ALT_CPU_FLASH_ACCELERATOR_LINE_SIZE 0
-#define ALT_CPU_FLUSHDA_SUPPORTED
-#define ALT_CPU_FREQ 50000000
-#define ALT_CPU_HARDWARE_DIVIDE_PRESENT 0
-#define ALT_CPU_HARDWARE_MULTIPLY_PRESENT 0
-#define ALT_CPU_HARDWARE_MULX_PRESENT 0
-#define ALT_CPU_HAS_DEBUG_CORE 1
-#define ALT_CPU_HAS_DEBUG_STUB
-#define ALT_CPU_HAS_ILLEGAL_INSTRUCTION_EXCEPTION
-#define ALT_CPU_HAS_JMPI_INSTRUCTION
-#define ALT_CPU_ICACHE_LINE_SIZE 0
-#define ALT_CPU_ICACHE_LINE_SIZE_LOG2 0
-#define ALT_CPU_ICACHE_SIZE 0
-#define ALT_CPU_INST_ADDR_WIDTH 0x1c
-#define ALT_CPU_NAME "nios2_gen2_0"
-#define ALT_CPU_OCI_VERSION 1
-#define ALT_CPU_RESET_ADDR 0x00000000
+#define CLK_FREQ 50000000UL // 50 MHz
 
+// TODO: Modify ?? (check the other adresses as well)
+#define MEMADDR_IRQCONTROLLER ((uintptr_t)(0x00010000))
 
-/*
- * CPU configuration (with legacy prefix - don't use these anymore)
- *
- */
+#define IRQ_UART 0
 
-#define NIOS2_BIG_ENDIAN 0
-#define NIOS2_BREAK_ADDR 0x08000820
-#define NIOS2_CPU_ARCH_NIOS2_R1
-#define NIOS2_CPU_FREQ 50000000u
-#define NIOS2_CPU_ID_SIZE 1
-#define NIOS2_CPU_ID_VALUE 0x00000000
-#define NIOS2_CPU_IMPLEMENTATION "tiny"
-#define NIOS2_DATA_ADDR_WIDTH 0x1c
-#define NIOS2_DCACHE_LINE_SIZE 0
-#define NIOS2_DCACHE_LINE_SIZE_LOG2 0
-#define NIOS2_DCACHE_SIZE 0
-#define NIOS2_EXCEPTION_ADDR 0x00000020
-#define NIOS2_FLASH_ACCELERATOR_LINES 0
-#define NIOS2_FLASH_ACCELERATOR_LINE_SIZE 0
-#define NIOS2_FLUSHDA_SUPPORTED
-#define NIOS2_HARDWARE_DIVIDE_PRESENT 0
-#define NIOS2_HARDWARE_MULTIPLY_PRESENT 0
-#define NIOS2_HARDWARE_MULX_PRESENT 0
-#define NIOS2_HAS_DEBUG_CORE 1
-#define NIOS2_HAS_DEBUG_STUB
-#define NIOS2_HAS_ILLEGAL_INSTRUCTION_EXCEPTION
-#define NIOS2_HAS_JMPI_INSTRUCTION
-#define NIOS2_ICACHE_LINE_SIZE 0
-#define NIOS2_ICACHE_LINE_SIZE_LOG2 0
-#define NIOS2_ICACHE_SIZE 0
-#define NIOS2_INST_ADDR_WIDTH 0x1c
-#define NIOS2_OCI_VERSION 1
-#define NIOS2_RESET_ADDR 0x00000000
+#ifndef DBUILD_VERSION
+#define DBUILD_VERSION "git undefined"
+#endif
+
+#ifndef DBUILD_DATE
+#define DBUILD_DATE "date undefined"
+#endif
+
+/* InterruptController
+
+	The InterruptController serves as a simple replacement for the PLIC/CLINT.
+	It provides handling for external, soft and timer interrupts.
+	External interrupts are connected via Qsys and assert the IRQ_M_EXT signal to the
+	core when a bit in both <pending> and <enabled> is high.
+	<pending> can be read anytime and shows all current asserted interrupts,
+	even if the interrupt is not enabled.
+	<mtimeh_latch> is set to the current <mtimeh> value whenever <mtime> (low) is read,
+	this is used to snapshot the 64-bit register and read it with 32-bit access without any changes.
+	Similary mtimecmp can be written with a 64-bit value at once.
+	First <mtimecmph_latch> is written with bits 63 to 32, then <mtimecmp_latch> is written
+	with bit 31 to 0. Writing <mtimecmp_latch> writes directly to <mtimecmp>
+	and copies the 32-bits of the high-register in the same cycle.
+	While mtime is greater or equal to mtimecmp, the IRQ_M_TMR signal is asserted.
+	Finally while the register <softinterupt> is holding a value equal nonzero,
+	the IRQ_M_SFT signal is asserted. It takes approx. 4 instructions after the write
+	until the core is interrupted.
+
+*/
+
+typedef volatile struct {
+	uint32_t pending; // R
+	uint32_t enabled; // RW
+	uint32_t mtime; // RW
+	uint32_t mtimeh; // RW
+	uint32_t mtimeh_latch; // R
+	uint32_t mtimecmp; // RW
+	uint32_t mtimecmph; // RW
+	uint32_t mtimecmp_latch; // W
+	uint32_t mtimecmph_latch; // RW
+	uint32_t softinterrupt; // RW
+} InterruptController;
+
+extern InterruptController* g_InterruptController;
 
 
 /*
