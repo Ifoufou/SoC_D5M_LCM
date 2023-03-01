@@ -106,6 +106,30 @@ uint8_t max_pixel_value_rgb(uint8_t *frame, uint32_t width, uint32_t height) {
     return max;
 }
 
+uint8_t threshold_rgb(uint8_t *frame, uint32_t width, uint32_t height) {
+    uint8_t max = 0;
+    const uint32_t threshold_value = 127*127*127; 
+    
+    uint32_t height_rgb = height;
+    uint32_t width_rgb  = width *4;
+    
+    for (uint32_t row_rgb = 0; row_rgb < height_rgb; row_rgb+=1) {
+        for (uint32_t col_rgb = 0; col_rgb < width_rgb; col_rgb+=4) {
+            uint32_t red_value   = (uint32_t) frame[row_rgb * width_rgb + col_rgb + 2]; /* R */
+            uint32_t green_value = (uint32_t) frame[row_rgb * width_rgb + col_rgb + 1]; /* G */
+            uint32_t blue_value  = (uint32_t) frame[row_rgb * width_rgb + col_rgb];     /* B */
+            uint32_t pixel_value = red_value * green_value * blue_value;
+            
+            if (pixel_value < threshold_value)
+                frame[row_rgb * width_rgb + col_rgb + 2] = frame[row_rgb * width_rgb + col_rgb + 1] = frame[row_rgb * width_rgb + col_rgb] = 0x00;
+            else
+                frame[row_rgb * width_rgb + col_rgb + 2] = frame[row_rgb * width_rgb + col_rgb + 1] = frame[row_rgb * width_rgb + col_rgb] = 0xff;
+        }
+    }
+
+    return max;
+}
+
 bool write_ppm_rgb(uint8_t *frame, uint32_t width, uint32_t height, const char *filename) {
     FILE *foutput = fopen(filename, "w");
     if (!foutput) {
@@ -178,6 +202,8 @@ int main(void) {
      */
     size_t frame_size = trdb_d5m_frame_size(&trdb_d5m);
     printf("size of the frame: %u\n", frame_size);
+    uint32_t frame_width = trdb_d5m_frame_width(&trdb_d5m);
+    uint32_t frame_height = trdb_d5m_frame_height(&trdb_d5m);
     
     void *frame = calloc(frame_size, 1);
     if (!frame) {
@@ -227,9 +253,10 @@ int main(void) {
     alt_up_pixel_buffer_dma_swap_buffers(pixel_buf_dma_dev);
 
     trdb_d5m_cam_loop(&trdb_d5m, frame, frame_size);
-    //while (1) {
-    //    trdb_d5m_snapshot(&trdb_d5m, frame, frame_size);
-    //}
+    /*while (1) {
+        trdb_d5m_snapshot(&trdb_d5m, frame, frame_size);
+        threshold_rgb(frame, frame_width, frame_height);	
+    }*/
 
     return EXIT_SUCCESS;
 }
